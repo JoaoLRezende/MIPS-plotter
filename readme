@@ -1,0 +1,11 @@
+Para rodar no MARS:
+	1. Abrir o MARS.
+	2. Abrir qualquer dos arquivos fonte do projeto no MARS.
+	3. Ativar a opção Settings -> "Assemble all files in directory" no MARS.
+	4. Ativar a opção Settings -> "Initialize Program Counter to [...]" no MARS.
+	5. Abrir a ferramenta Bitmap Display do MARS (no menu Tools do MARS) no MARS.
+	6. Dessa ferramenta, setar as configurações:
+		Unit Width in Pixels:  2.
+		Unit Height in Pixels: 2.
+	7. Clicar em "Connect to MIPS".
+	8. Assemble and run.
