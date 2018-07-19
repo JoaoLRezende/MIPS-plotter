@@ -4,6 +4,8 @@
 
 plot_polynomial:
 # Function that draws the graph of a polynomial (as evaluated by eval_polynomial) on the screen.
+# Argument:
+#	$a0: address of the integer array that represents the polynomial, to pass to eval_polynomial.
 # Registers used:
 #	$t0: current x.
 #	$t1: f(x).
@@ -12,10 +14,13 @@ plot_polynomial:
 #	$t5: x coordinate of the last visible column (to be used as a stop condition).
 #	$t6: y coordinate of the highest visible column.
 #	$t7: y coordinate of the lowest visible column.
+#	$t8: address of the integer array that represents the polynomial, to pass to eval_polynomial.
 
 	# Save $ra.
 		add $sp, $sp, -4
 		sw $ra, ($sp)
+	# Set $t8.
+		move $t8, $a0
 	# Clear the screen and draw the axes.
 		jal clear_screen
 		nop
@@ -38,7 +43,7 @@ plot_polynomial:
 	# Draw the graph
 	for_every_x:
 		# Calculate f(x).
-			# Save $t0, $t1, $t3, $t4, $t5, $t6, $t7.
+			# Save $t0, $t1, $t3, $t4, $t5, $t6, $t7, $t8.
 				add $sp, $sp, -4
 				sw $t0, ($sp)
 				add $sp, $sp, -4
@@ -53,11 +58,16 @@ plot_polynomial:
 				sw $t6, ($sp)
 				add $sp, $sp, -4
 				sw $t7, ($sp)
+				add $sp, $sp, -4
+				sw $t8, ($sp)
 			# Call eval_polynomial.
 				move $a0, $t0
+				move $a1, $t8
 				jal eval_polynomial
 				nop
-			# Recover $t0, $t1, $t3, $t4, $t5, $t6, $t7.
+			# Recover $t0, $t1, $t3, $t4, $t5, $t6, $t7, $t8.
+				lw $t8, ($sp)
+				add $sp, $sp, 4
 				lw $t7, ($sp)
 				add $sp, $sp, 4
 				lw $t6, ($sp)
@@ -80,7 +90,7 @@ plot_polynomial:
 			blt $t1, $t7, update_t3_t4
 			nop
 		# Paint the correspoding point in the plane, and draw a line between it and the previous point.
-			# Save $t0, $t1, $t3, $t4, $t5, $t6, $t7.
+			# Save $t0, $t1, $t3, $t4, $t5, $t6, $t7, $t8.
 				add $sp, $sp, -4
 				sw $t0, ($sp)
 				add $sp, $sp, -4
@@ -95,6 +105,8 @@ plot_polynomial:
 				sw $t6, ($sp)
 				add $sp, $sp, -4
 				sw $t7, ($sp)
+				add $sp, $sp, -4
+				sw $t8, ($sp)
 			# Call draw_line.
 				move $a0, $t3
 				move $a1, $t4
@@ -102,7 +114,9 @@ plot_polynomial:
 				move $a3, $t1
 				jal draw_line
 				nop
-			# Recover $t0, $t1, $t3, $t4, $t5, $t6, $t7.
+			# Recover $t0, $t1, $t3, $t4, $t5, $t6, $t7, $t8.
+				lw $t8, ($sp)
+				add $sp, $sp, 4	
 				lw $t7, ($sp)
 				add $sp, $sp, 4	
 				lw $t6, ($sp)

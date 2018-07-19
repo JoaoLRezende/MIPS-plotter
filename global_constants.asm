@@ -10,3 +10,11 @@
 	.eqv  BG_COLOR     0xFFFFFF  # white
 	.eqv  GRAPH_COLOR  0xFF0000  # red
 	.eqv  AXES_COLOR   0x000000  # black
+
+	
+	# The structure that represents a polynomial is an array of 32-bit signed integers representing the
+	# coefficients of the polynomial's terms.
+	# The n-th element of the array is the coefficient of the term of degree n.
+	# The highest polynomial degree that can be handled is equal to the array's length minus one.
+	.eqv	POLYNOMIAL_ARRAY_LENGTH		4	# in words
+	.eqv	POLYNOMIAL_ARRAY_SIZE		16	# in bytes; equal to 4 * POLYNOMIAL_ARRAY_LENGTH
