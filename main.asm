@@ -5,7 +5,7 @@
 
 .data
 	# The framebuffer resides at the start of the data segment for reading by MARS' Bitmap Display tool.
-	# Each display unit is represented by one 32-bit word in the framebuffer.
+	# Each display unit is represented by one 32-bit word.
 	framebuffer:	.space	TOTAL_FRAMEBUFFER_SIZE
 
 .text

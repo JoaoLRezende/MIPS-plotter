@@ -154,8 +154,14 @@ read_polynomial:	.globl	read_polynomial
 			# Get the address of the array's word to be set.
 				mul $t6, $t5, 4
 				add $t6, $t1, $t6
-			# Store the coefficient there.
-				sw $t4 ($t6)
+			# Add the read coefficient to what is already there there.
+				# Load the word into $t9.
+					lw $t9, ($t6)
+				# Add to it the coefficient read.
+					add $t9, $t9, $t4
+					sw $t4 ($t6)
+				# Store the sum back in the array.
+					sw $t9, ($t6)
 		# Reiterate:
 			j main_loop
 			nop
