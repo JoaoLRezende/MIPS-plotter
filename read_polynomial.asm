@@ -88,8 +88,11 @@ read_polynomial:	.globl	read_polynomial
 			move $t2, $v0
 		# Load the pointed-to char into $t3.
 			lbu $t3, ($t2)
-		# If it is is a null byte, return.
+		# If it is is a null byte or a newline character, return.
 			beq $t3, $0, return
+			nop
+			beq $t3, 10, return
+			nop
 		# Get the next coefficient. Check whether the next character is x.
 				bne $t3, 120, not_x
 				nop
