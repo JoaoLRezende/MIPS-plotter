@@ -45,12 +45,14 @@ plot_polynomial:	.globl	plot_polynomial
 # Registers used:
 #	$t0: current x.
 #	$t1: f(x).
+#	$t2: temp.
 #	$t3: previous x.
 #	$t4: previous f(x).
 #	$t5: x coordinate of the last visible column (to be used as a stop condition).
 #	$t6: y coordinate of the highest visible row.
 #	$t7: y coordinate of the lowest visible row.
 #	$t8: address of the integer array that represents the polynomial, to pass to eval_polynomial.
+#	$t9: temp.
 
 	# Save $ra.
 		add $sp, $sp, -4
@@ -86,11 +88,28 @@ plot_polynomial:	.globl	plot_polynomial
 			nop
 			restore_registers
 			move $t1, $v0
-		# Check whether the display row of index f(x) is visible in the graph window. If it isn't, don't try to paint anything.
-			bgt $t1, $t6, update_t3_t4
-			nop
-			blt $t1, $t7, update_t3_t4
-			nop
+		# If neither the current f(x) nor the previous one represent a visible row of the graph, simply reiterate.
+			# Set $t2 to 1 if the previous f(x) doesn't represent a visible row.
+				sgt $t2, $t4, $t6
+				beq $t2, 1, test_current_f
+				nop
+				slt $t2, $t4, $t7
+				beq $t2, 1, test_current_f
+				nop
+			# Set $t9 to 1 if the current f(x) doesn't represent a visible row.
+			test_current_f:
+				sgt $t9, $t1, $t6
+				beq $t9, 1, test_AND
+				nop
+				slt $t9, $t1, $t7
+				beq $t9, 1, test_AND
+				nop
+			# Set $t9 to 1 if both registers were set to 1.
+			test_AND:
+				and $t9, $t2, $t9
+			# If $t9 has 1, reiterate.
+				beq $t9, 1, update_t3_t4
+				nop
 		# Paint the correspoding point in the plane, and draw a line between it and the previous point.
 			move $a0, $t3
 			move $a1, $t4
