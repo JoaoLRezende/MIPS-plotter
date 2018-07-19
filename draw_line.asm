@@ -1,5 +1,35 @@
 .globl draw_line
 
+.macro save_registers
+	add $sp, $sp, -4
+	sw $a3, ($sp)
+	add $sp, $sp, -4
+	sw $t0, ($sp)
+	add $sp, $sp, -4
+	sw $t1, ($sp)
+	add $sp, $sp, -4
+	sw $t2, ($sp)
+	add $sp, $sp, -4
+	sw $t3, ($sp)
+	add $sp, $sp, -4
+	sw $t4, ($sp)
+.end_macro
+
+.macro restore_registers
+	lw $t4, ($sp)
+	add $sp, $sp, 4
+	lw $t3, ($sp)
+	add $sp, $sp, 4
+	lw $t2, ($sp)
+	add $sp, $sp, 4
+	lw $t1, ($sp)
+	add $sp, $sp, 4
+	lw $t0, ($sp)
+	add $sp, $sp, 4
+	lw $a3, ($sp)
+	add $sp, $sp, 4
+.end_macro
+
 .include "global_constants.asm"
 
 draw_line:
@@ -45,37 +75,12 @@ draw_line:
 	# Draw the line.
 	draw_loop:
 		# Call paint_coordinate.
-			# Save registers $a3, $t0, $t1, $t2, $t3, $t4.
-				add $sp, $sp, -4
-				sw $a3, ($sp)
-				add $sp, $sp, -4
-				sw $t0, ($sp)
-				add $sp, $sp, -4
-				sw $t1, ($sp)
-				add $sp, $sp, -4
-				sw $t2, ($sp)
-				add $sp, $sp, -4
-				sw $t3, ($sp)
-				add $sp, $sp, -4
-				sw $t4, ($sp)
-			# Place arguments and make the call.
-				move $a0, $t2
-				move $a1, $t3
-				jal paint_coordinate
-				nop
-			# Recover $a3, $t0, $t1, $t2, $t3, $t4.
-				lw $t4, ($sp)
-				add $sp, $sp, 4
-				lw $t3, ($sp)
-				add $sp, $sp, 4
-				lw $t2, ($sp)
-				add $sp, $sp, 4
-				lw $t1, ($sp)
-				add $sp, $sp, 4
-				lw $t0, ($sp)
-				add $sp, $sp, 4
-				lw $a3, ($sp)
-				add $sp, $sp, 4
+			save_registers
+			move $a0, $t2
+			move $a1, $t3
+			jal paint_coordinate
+			nop
+			restore_registers
 		# Move towards the second point vertically.
 			add $t3, $t3, $t0
 		# If we've reached the midpoint between the points, switch to the column of the rightmost point.
