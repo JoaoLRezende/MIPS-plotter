@@ -60,6 +60,7 @@ read_polynomial:	.globl	read_polynomial
 #	$t4: coefficient of the current term.
 # 	$t5: degree of the current term.
 #	$t6: address of the current element of the array to be set.
+#	$t7: the highest exponent that can be handled (POLYNOMIAL_ARRAY_LENGTH − 1).
 #	$t9: temp.
 # Returns:
 #	$v0: pointer to the polynomial structure.
@@ -74,6 +75,9 @@ read_polynomial:	.globl	read_polynomial
 		li $a0, POLYNOMIAL_ARRAY_SIZE
 		syscall
 		move $t1, $v0
+	# Set $t7.
+		li $t7, POLYNOMIAL_ARRAY_LENGTH
+		add $t7, $t7, -1
 	# Initialize $t2 and load the first char into $t3.
 		move $t2, $t0
 		lbu $t3, ($t2)
@@ -149,6 +153,16 @@ read_polynomial:	.globl	read_polynomial
 					restore_registers
 					move $t5, $v0
 					move $t2, $v1
+					# If the read exponent is greater than the highest exponent we can handle, terminate.
+						ble $t5, $t7, store_in_array
+						nop
+						li $v0, 4
+						la $a0, str_degree_error
+						syscall
+						jal clear_screen
+						nop
+						li $v0, 10
+						syscall
 		# Store the read coefficient in the position of the array determined by the exponent.
 		store_in_array:
 			# Get the address of the array's word to be set.

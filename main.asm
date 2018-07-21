@@ -1,15 +1,5 @@
-.globl main
-.globl framebuffer
+main:	.globl main
 
-.include "global_constants.asm"
-
-.data
-	# The framebuffer resides at the start of the data segment for reading by MARS' Bitmap Display tool.
-	# Each display unit is represented by one 32-bit word.
-	framebuffer:	.space	TOTAL_FRAMEBUFFER_SIZE
-
-.text
-main:
 	# Allocate space to store a polynomial as a string; store a pointer to that space in $s0.
 		li $v0, 9
 		li $a0, 200
