@@ -16,5 +16,5 @@
 	# coefficients of the polynomial's terms.
 	# The n-th element of the array is the coefficient of the term of degree n.
 	# The highest polynomial degree that can be handled is equal to the array's length minus one.
-	.eqv	POLYNOMIAL_ARRAY_LENGTH		30	# in words
-	.eqv	POLYNOMIAL_ARRAY_SIZE		120	# in bytes; equal to 4 * POLYNOMIAL_ARRAY_LENGTH
+	.eqv	POLYNOMIAL_ARRAY_LENGTH		5	# in words
+	.eqv	POLYNOMIAL_ARRAY_SIZE		20	# in bytes; equal to 4 * POLYNOMIAL_ARRAY_LENGTH
