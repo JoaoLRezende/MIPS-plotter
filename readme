@@ -9,3 +9,25 @@ Para rodar no MARS:
 		Unit Height in Pixels: 2.
 	7. Clicar em "Connect to MIPS".
 	8. Assemble and run.
+	
+
+O polinômio deve ser inserido na forma de uma sequência de termos (monômios)
+separados por + ou −. Cada termo deve estar na forma cx^e, onde c é um inteiro e
+e é o grau do termo (i.e. o expoente da variável independente).
+e deve ser menor que 5.
+c e/ou ^e podem ser omitidos.
+Exemplos:
+	x
+	x^2
+	4x^3 - 1x
+	x + 2x^2 + 3x^3 + 4x^4
+
+
+A corretude do gráfico gerado para um polinômio p(x) pode ser verificada comparando-o
+com o gerado pelo Wolfram Alpha com a query:
+plot p(x); x from -128 to 128, y from -64 to 64
+
+
+
+
+TODO: formatação. (Diferenciar matematiquês do português somehow.)
