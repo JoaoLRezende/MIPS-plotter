@@ -173,7 +173,3 @@ read_polynomial:	.globl	read_polynomial
 		move $v0, $t1
 		jr $ra
 		nop
-		
-	
-	
-	# TODO: handle a plus or minus sign coming immediately before an x
