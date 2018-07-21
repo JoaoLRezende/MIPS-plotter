@@ -89,6 +89,26 @@ atoi:	.globl atoi
 		nop
 		restore_registers
 		move $t1, $v0
+	# If the character we're now pointing at is not a digit, we have no explicit number. Return 1 or −1, depending 
+	#	on the signal we've read.
+		# Get the character.
+			lbu $t2, ($t1)
+		# Check whether it is a digit.
+			blt $t2, 48, no_number
+			nop
+			bgt $t2, 57, no_number
+			nop
+			j yes_number
+			nop
+		# If it isn't, return 1 or −1.
+		no_number:
+			lw $ra, ($sp)
+			add $sp, $sp, 4
+			move $v0, $t3
+			move $v1, $t1
+			jr $ra
+			nop
+	yes_number:
 	# Store the resulting pointer in $t0.
 		move $t0, $t1
 	# Count how many digits the number has.
