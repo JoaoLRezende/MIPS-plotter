@@ -33,17 +33,18 @@
 .include "global_constants.asm"
 
 draw_line:
-# Function that takes two coordinates (that is, two ordered pairs representing two points in the plane)
-#	in adjacent columns and draws a line connecting them.
+# Function that takes two coordinates (that is, two ordered pairs representing two points of the plane)
+#	in adjacent columns and paints them and draws a line connecting them.
 # Arguments:
 #	$a0 and $a1: x and y coordinates of the leftmost point.
 #	$a2 and $a3: x and y coordinates of the rightmost point.
 # Registers used:
 #	$t0: +1 if the second point has a higher y coordinate than the first, -1 otherwise (to be used as a delta).
-#	$t1: the average between the y coordinates of the points.
+#	$t1: the average between the y coordinates of the points. (That is, the y coordinate of the midpoint.)
+#		(When drawing the line, we'll switch columns when we've reached this height.)
 #	$t2: x coordinate of the point being currently painted.
 #	$t3: y coordinate of the point being currently painted.
-#	$t4: y coordinate of the rightmost point plus the content of $t0, to be used as a stop condition.
+#	$t4: y coordinate of the rightmost point plus the content of $t0, to be used as a stop condition for drawing the line.
 
 
 	# Save $ra.

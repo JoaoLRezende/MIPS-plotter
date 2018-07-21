@@ -1,3 +1,5 @@
+.globl	read_polynomial
+
 .include "global_constants.asm"
 
 .macro save_registers
@@ -47,9 +49,9 @@
 .end_macro
 
 
-read_polynomial:	.globl	read_polynomial
+read_polynomial:
 # Function that takes a pointer to a string that represents a polynomial, and returns a pointer
-#	to a (self-allocated) structure representing that polynomial for evaluation by eval_polynomial.
+#	to a (self-allocated) array representing that polynomial for evaluation by eval_polynomial.
 # Argument:
 #	$a0: pointer to the polynomial string.
 # Registesrs used:
@@ -63,7 +65,7 @@ read_polynomial:	.globl	read_polynomial
 #	$t7: the highest exponent that can be handled (POLYNOMIAL_ARRAY_LENGTH − 1).
 #	$t9: temp.
 # Returns:
-#	$v0: pointer to the polynomial structure.
+#	$v0: pointer to the polynomial array.
 
 	# Save $ra.
 		add $sp, $sp, -4
@@ -100,7 +102,7 @@ read_polynomial:	.globl	read_polynomial
 		# Get the next coefficient. Check whether the next character is x.
 				bne $t3, 120, not_x
 				nop
-			# If it is, set $t4 to 1.
+			# If it is, we have no explicit coefficient; set $t4 to 1.
 				li $t4, 1
 				j after_getting_coefficient
 				nop
@@ -122,7 +124,7 @@ read_polynomial:	.globl	read_polynomial
 			restore_registers
 			move $t2, $v0
 		# If we're not pointing at an x, this term has no x (is a constant term). skip the reading of
-		#	 an exponent, and pretend we've read x^0 instead.
+		#	 an exponent, pretend we've read x^0 instead.
 			lbu $t3, ($t2)
 			beq $t3, 120, is_x
 			nop

@@ -7,7 +7,7 @@ clear_screen:
 # Registers used:
 #	$t0: BG_COLOR.
 #	$t1: address of current display unit.
-#	$t2: address of the framebuffer's last display unit.
+#	$t2: address of the memory word that comes immediately after the framebuffer in memory (for use as a stop condition).
 
 	# Initialize $t0 and $t1.
 		li $t0, BG_COLOR

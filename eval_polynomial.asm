@@ -1,7 +1,9 @@
+.globl  eval_polynomial
+
 .include "global_constants.asm"
 
-eval_polynomial:	.globl  eval_polynomial
-# Function that returns the value of the input polynomial for a given x.
+eval_polynomial:
+# Function that returns the value of a polynomial (received as an array of coefficients) for a given x.
 # Arguments:
 #	$a0: x.
 #	$a1: address of the integer array that represents the polynomial.
@@ -9,7 +11,7 @@ eval_polynomial:	.globl  eval_polynomial
 #	$v0: the value of the polynomial for the given x.
 # Registers used:
 #	$t0: x
-#	$t1: i.
+#	$t1: degree of the current term (= index of the array element being dealt with).
 #	$t4: base address of the array.
 #	$t5; address of current element of the array.
 #	$t6: current element of the array.

@@ -12,7 +12,7 @@ paint_coordinate:
 #	$t1: row of the display unit.
 #	$t2: address of the framebuffer.
 #	$t3: address of the display unit.
-#	$t4: temporary storage of value of subexpression.
+#	$t4: temp.
 #	$t5: GRAPH_COLOR.
 #	$t6: temp.
 

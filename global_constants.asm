@@ -7,6 +7,7 @@
 	.eqv	TOTAL_FRAMEBUFFER_SIZE	131072	# = 4 * 256 *128
 
 
+	# Colors.
 	.eqv  BG_COLOR     0xFFFFFF  # white
 	.eqv  GRAPH_COLOR  0xFF0000  # red
 	.eqv  AXES_COLOR   0x000000  # black

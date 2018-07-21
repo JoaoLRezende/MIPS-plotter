@@ -1,4 +1,6 @@
-pow:	.globl pow
+.globl pow
+
+pow:
 # Function that returns its first argument raised to its second.
 # Arguments:
 #	$a0: the base.

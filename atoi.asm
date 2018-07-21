@@ -1,3 +1,5 @@
+.globl atoi
+
 .macro save_registers
 	add $sp, $sp, -4
 	sw $t0, ($sp)
@@ -36,8 +38,7 @@
 	add $sp, $sp, 4
 .end_macro
 
-
-atoi:	.globl atoi
+atoi:
 # Function that takes a pointer to a string of decimal ASCII digits and returns the value of the number represented
 # 	by that string as a 32-bit signed integer. Before the digits, the string may contain whitespace and either
 #	a plus sign or a minus sign,
@@ -52,7 +53,7 @@ atoi:	.globl atoi
 #	$t4: length of the number (in digits).
 #	$t5: the number's value.
 #	$t6: the index of the current digit. (The digit of least value, which is the rightmost one, has index 0.)
-#	$t7: weight of the current digit; its index multiplied by 10.
+#	$t7: weight of the current digit, which is equal to 10 raised to its index.
 # Returns:
 #	$v0: the number.
 #	$v1: address of the first byte after the digit string.
@@ -64,7 +65,7 @@ atoi:	.globl atoi
 		jal skip_whitespace
 		nop
 		move $t1, $v0
-	# Check whether it is a plus or minus sign and set $t3 accordingly. If it is, also increment the pointer.
+	# Check whether it is a plus/minus sign and set $t3 accordingly. If it is, also increment the pointer.
 		# Load the char into $t2.
 			lbu $t2, ($t1)
 		# Initialize $t3 to 1. (If it has no sign, it's positive.)
@@ -89,8 +90,8 @@ atoi:	.globl atoi
 		nop
 		restore_registers
 		move $t1, $v0
-	# If the character we're now pointing at is not a digit, we have no explicit number. Return 1 or −1, depending 
-	#	on the signal we've read.
+	# If the character we're now pointing at is not a digit, there is no explicit number to read.
+	#	Return 1 or −1, depending on the signal we've read.
 		# Get the character.
 			lbu $t2, ($t1)
 		# Check whether it is a digit.
@@ -100,7 +101,7 @@ atoi:	.globl atoi
 			nop
 			j yes_number
 			nop
-		# If it isn't, return 1 or −1.
+		# If it isn't, return $s3 (which contains either 1 or −1).
 		no_number:
 			lw $ra, ($sp)
 			add $sp, $sp, 4
@@ -180,5 +181,5 @@ atoi:	.globl atoi
 		
 
 
-# Yes, this would've been easier, simpler, faster, and wouldn't have needed a pow function if I had just traversed the string
-# backwards. idgaf, it works.
+# This would've been easier, simpler, faster, and wouldn't have needed a pow function if I had just traversed the string
+# backwards. But hey it works :D
