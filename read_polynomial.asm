@@ -135,6 +135,48 @@ read_polynomial:
 		# Increment $t2. (We're pointing to x; we want to point to what comes after it.)
 			add $t2, $t2, 1
 		# Get the exponent.
+			# Check whether the next char is superscript number.
+				lbu $t3, ($t2)
+				# If it is a '⁰', store 0 in $t5.
+					bne $t3, 112, check_superscript_1
+					nop
+					li $t5, 0
+					add $t2, $t2, 1
+					j store_in_array
+					nop
+				# If it is a '¹', store 1 in $t5.
+				check_superscript_1:
+					bne $t3, 185, check_superscript_2
+					nop
+					li $t5, 1
+					add $t2, $t2, 1
+					j store_in_array
+					nop
+				# If it is a '²', store 2 in $t5.
+				check_superscript_2:
+					bne $t3, 178, check_superscript_3
+					nop
+					li $t5, 2
+					add $t2, $t2, 1
+					j store_in_array
+					nop
+				# If it is a '³', store 3 in $t5.
+				check_superscript_3:
+					bne $t3, 179, check_superscript_4
+					nop
+					li $t5, 3
+					add $t2, $t2, 1
+					j store_in_array
+					nop
+				# If it is a '4', store 4 in $t5.
+				check_superscript_4:
+					bne $t3, 116, after_superscript_check
+					nop
+					li $t5, 4
+					add $t2, $t2, 1
+					j store_in_array
+					nop
+			after_superscript_check:
 			# Check whether the next char is a circumflex.
 				lbu $t3, ($t2)
 				bne $t3, 94, no_circumflex
