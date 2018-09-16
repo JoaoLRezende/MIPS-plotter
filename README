@@ -1,4 +1,4 @@
-To run on [MARS](http://courses.missouristate.edu/KenVollmar/mars/ "A lightweight 4-MB MIPS simulator"):
+To run on MARS (http://courses.missouristate.edu/KenVollmar/mars/):
 	1. Open any of the project's source files.
 	2. Enable the setting "Assemble all files in directory".	
 	3. Enable the setting "Initialize Program Counter to global 'main' if defined".	
@@ -17,4 +17,4 @@ Examples of polynomials:
 	x + 2x² + 3x³ + 4x⁴
 	
 Caret sequences can be used instead of superscript integers.
-For example, `2x^4 + x^3` is the same as `2x⁴ + x³`.
+For example, 2x^4 + x^3 is the same as 2x⁴ + x³.
