@@ -13,10 +13,10 @@ To run on [MARS](http://courses.missouristate.edu/KenVollmar/mars/):
 
 Some examples of polynomials:
 
-	x
-	x²
-	4x³ - 1x
-	x + 2x² + 3x³ + 4x⁴
+- `x`
+- `x²`
+- `4x³ - 1x`
+- `x + 2x² + 3x³ + 4x⁴`
 	
 Caret sequences can be used instead of superscript integers.
 For example, 2x^4 + x^3 is the same as 2x⁴ + x³.
